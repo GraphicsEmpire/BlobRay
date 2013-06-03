@@ -10,17 +10,24 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include "PS_Graphics/PS_GLSurface.h"
+#include "PS_Graphics/PS_Pixmap.h"
 #include "PS_Base/PS_Logger.h"
+#include "RayTracer.h"
 
 using namespace std;
+using namespace PS;
+using namespace PS::RASTER;
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
+
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
 #define FOVY 45.0
 #define ZNEAR 0.01
 #define ZFAR 100.0
 
-GLSurface* g_lpSurface = NULL;
+
+//GLSurface* g_lpSurface = NULL;
+RayTracer* g_lpRayTracer = NULL;
 
 //Global Funcs
 void SpecialKey(int key, int x, int y);
@@ -32,16 +39,8 @@ void Draw() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	if(g_lpSurface)
-		g_lpSurface->drawAsQuad();
-	/*
-	glColor3f(0, 1, 0);
-	glBegin(GL_TRIANGLES);
-	glVertex3f(0, 0, 0);
-	glVertex3f(1, 0, 0);
-	glVertex3f(0.5, 1, 0);
-	glEnd();
-	*/
+	if(g_lpRayTracer)
+		g_lpRayTracer->draw();
 
 	glutSwapBuffers();
 }
@@ -74,6 +73,11 @@ void NormalKey(unsigned char key, int x, int y) {
 	case('c'): {
 		glutLeaveMainLoop();
 		break;
+	case('r'): {
+		g_lpRayTracer->run();
+		glutPostRedisplay();
+		break;
+	}
 	}
 	}
 }
@@ -86,15 +90,7 @@ void Init() {
 	glClearColor(1.0, 0.0, 0.0, 1.0);
 	glMatrixMode(GL_MODELVIEW);
 
-
-
-	g_lpSurface = new GLSurface(WINDOW_WIDTH, WINDOW_HEIGHT);
-	g_lpSurface->attach();
-	g_lpSurface->testDrawTriangle();
-	g_lpSurface->detach();
-	g_lpSurface->saveAsPNG("test1.png");
-
-	//g_lpSurface->detach();
+	g_lpRayTracer = new RayTracer(WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
 int main(int argc, char* argv[]) {

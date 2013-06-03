@@ -33,7 +33,7 @@ public:
         y = pValues[1];
     }
 
-    void store(const T* pValues) {
+    void store(const T* pValues) const {
         pValues[0] = x;
         pValues[1] = y;
     }
@@ -221,6 +221,9 @@ typedef Vec2<bool> vec2b;
 
 typedef Vec2<I32>   vec2i;
 typedef Vec2<U32>	 vec2u;
+
+typedef Vec2<I8>	vec2i8;
+typedef Vec2<U8>	vec2u8;
 typedef Vec2<I16>   vec2i16;
 typedef Vec2<U16>	 vec2u16;
 typedef Vec2<I32>   vec2i32;
@@ -251,7 +254,7 @@ public:
         z = pValues[2];
     }
 
-    void store(T* pValues) {
+    void store(T* pValues) const {
         pValues[0] = x;
         pValues[1] = y;
         pValues[2] = z;
@@ -457,6 +460,9 @@ typedef Vec3<bool>  vec3b;
 
 typedef Vec3<I32>   vec3i;
 typedef Vec3<U32>	 vec3u;
+
+typedef Vec3<I8>	vec3i8;
+typedef Vec3<U8>	vec3u8;
 typedef Vec3<I16>   vec3i16;
 typedef Vec3<U16>	 vec3u16;
 typedef Vec3<I32>   vec3i32;
@@ -491,7 +497,7 @@ public:
         w = pValues[3];
     }
 
-    void store(T* pValues) {
+    void store(T* pValues) const {
         pValues[0] = x;
         pValues[1] = y;
         pValues[2] = z;
@@ -655,6 +661,9 @@ typedef Vec4<bool> vec4b;
 
 typedef Vec4<I32>   vec4i;
 typedef Vec4<U32>	 vec4u;
+
+typedef Vec4<I8>	vec4i8;
+typedef Vec4<U8>	vec4u8;
 typedef Vec4<I16>   vec4i16;
 typedef Vec4<U16>	 vec4u16;
 typedef Vec4<I32>   vec4i32;

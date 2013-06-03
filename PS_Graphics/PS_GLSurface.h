@@ -2,7 +2,7 @@
 #define PS_GLSURFACE_H
 
 #include "../PS_Base/PS_MathBase.h"
-#include "PS_PixelMap.h"
+#include "PS_Pixmap.h"
 //#include <GL/glew.h>
 
 #define DEFAULT_SURFACE_WIDTH 512
@@ -34,7 +34,6 @@ public:
 	/*!
 	 * Save the surface as a ppm image
 	 */
-	void saveAsPPM(const char* lpFilePath);
 	void saveAsPNG(const char* lpFilePath);
 
 	/*!

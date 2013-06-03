@@ -204,23 +204,6 @@ void GLSurface::drawAsQuad()
 }
 
 
-//Save the framebuffer output as a ppm
-void GLSurface::saveAsPPM(const char* lpFilePath)
-{
-	CPixelMap* lpMap = new CPixelMap(m_width, m_height);
-
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, m_glTex[0]);
-
-	//Saving to ppm
-	glReadPixels(0, 0, m_width, m_height, GL_RGBA8, GL_UNSIGNED_BYTE, (GLvoid*)lpMap->buffer());
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	lpMap->save(lpFilePath);
-
-	SAFE_DELETE(lpMap);
-}
-
 void GLSurface::saveAsPNG(const char* lpFilePath) {
 
 	vector<U8> data;

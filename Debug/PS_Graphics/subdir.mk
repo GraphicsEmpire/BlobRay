@@ -22,7 +22,7 @@ CPP_SRCS += \
 ../PS_Graphics/PS_MeshRender.cpp \
 ../PS_Graphics/PS_OclScan.cpp \
 ../PS_Graphics/PS_Particles.cpp \
-../PS_Graphics/PS_PixelMap.cpp \
+../PS_Graphics/PS_Pixmap.cpp \
 ../PS_Graphics/PS_Quaternion.cpp \
 ../PS_Graphics/PS_ShaderGLSL.cpp \
 ../PS_Graphics/PS_SketchConfig.cpp \
@@ -53,7 +53,7 @@ OBJS += \
 ./PS_Graphics/PS_MeshRender.o \
 ./PS_Graphics/PS_OclScan.o \
 ./PS_Graphics/PS_Particles.o \
-./PS_Graphics/PS_PixelMap.o \
+./PS_Graphics/PS_Pixmap.o \
 ./PS_Graphics/PS_Quaternion.o \
 ./PS_Graphics/PS_ShaderGLSL.o \
 ./PS_Graphics/PS_SketchConfig.o \
@@ -84,7 +84,7 @@ CPP_DEPS += \
 ./PS_Graphics/PS_MeshRender.d \
 ./PS_Graphics/PS_OclScan.d \
 ./PS_Graphics/PS_Particles.d \
-./PS_Graphics/PS_PixelMap.d \
+./PS_Graphics/PS_Pixmap.d \
 ./PS_Graphics/PS_Quaternion.d \
 ./PS_Graphics/PS_ShaderGLSL.d \
 ./PS_Graphics/PS_SketchConfig.d \
