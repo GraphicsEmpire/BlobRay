@@ -11,7 +11,7 @@ main.d main.o: ../main.cpp \
   /Users/pourya/Desktop/Projects/Dependencies/LOKI/include/loki/LokiExport.h \
   /Users/pourya/Desktop/Projects/Dependencies/LOKI/include/loki/Threads.h \
   ../RayTracer.h ../PS_Graphics/PS_Vector.h ../PS_Graphics/PS_Ray.h \
-  ../PS_Graphics/PS_Matrix.h
+  ../PS_Graphics/PS_Matrix.h ../PS_Graphics/PS_Interval.h
 
 /Users/pourya/Desktop/Projects/Dependencies/GLEW/include/GL/glew.h:
 
@@ -54,3 +54,5 @@ main.d main.o: ../main.cpp \
 ../PS_Graphics/PS_Ray.h:
 
 ../PS_Graphics/PS_Matrix.h:
+
+../PS_Graphics/PS_Interval.h:

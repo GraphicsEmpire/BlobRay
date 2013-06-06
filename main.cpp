@@ -19,8 +19,8 @@ using namespace PS;
 using namespace PS::RASTER;
 
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 512
+#define WINDOW_HEIGHT 512
 #define FOVY 45.0
 #define ZNEAR 0.01
 #define ZFAR 100.0
