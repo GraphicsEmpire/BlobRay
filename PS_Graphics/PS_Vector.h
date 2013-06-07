@@ -480,10 +480,10 @@ class Vec4{
 public:
     //Constructors
     Vec4() {}
-    Vec4(T a_):x(a_), y(a_), z(a_), w(a_) {}
-    Vec4(T x_, T y_, T z_, T w_ = 1.0f):x(x_), y(y_), z(z_), w(w_) {}
-    Vec4(const Vec2<T>& vl2, const Vec2<T>& vr2):x(vl2.x), y(vl2.y), z(vr2.x), w(vr2.y) {}
-    Vec4(const Vec3<T>& v3, T w_):x(v3.x), y(v3.y), z(v3.z), w(w_) {}
+    explicit Vec4(T a_):x(a_), y(a_), z(a_), w(a_) {}
+    explicit Vec4(T x_, T y_, T z_, T w_ = 1.0f) :x(x_), y(y_), z(z_), w(w_) {}
+    explicit Vec4(const Vec2<T>& vl2, const Vec2<T>& vr2):x(vl2.x), y(vl2.y), z(vr2.x), w(vr2.y) {}
+    explicit Vec4(const Vec3<T>& v3, T w_):x(v3.x), y(v3.y), z(v3.z), w(w_) {}
     Vec4(const Vec4& rhs):x(rhs.x), y(rhs.y), z(rhs.z), w(rhs.w) {}
     Vec4(const T* pValues) {
         load(pValues);
@@ -508,7 +508,7 @@ public:
     /*!
       * Get the xyz part of the 4D vector
       */
-    inline Vec3<T> getVec3() const;
+    inline Vec3<T> xyz() const;
     inline T element(int i) const;
     inline void setElement(int i, T v);
     T* ptr() {return &e[0];}
@@ -521,6 +521,7 @@ public:
     static Vec4 maxP(const Vec4& a, const Vec4& b);
     static Vec4 mul(const Vec4& a, const Vec4& b);
     static Vec4 div(const Vec4& a, const Vec4& b);
+    static Vec4 clamped(const Vec4& a, float aMin, float aMax);
 
 
     //Operators
@@ -548,7 +549,7 @@ public:
 
 
 template<typename T>
-Vec3<T> Vec4<T>::getVec3() const
+Vec3<T> Vec4<T>::xyz() const
 {
     return Vec3<T>(this->x, this->y, this->z);
 }
@@ -614,6 +615,15 @@ Vec4<T> Vec4<T>::div(const Vec4& a, const Vec4& b) {
     return result;
 }
 
+template<typename T>
+Vec4<T> Vec4<T>::clamped(const Vec4& a, float aMin, float aMax) {
+	Vec4<T> result = a;
+	Clamp<T>(result.x, aMin, aMax);
+	Clamp<T>(result.y, aMin, aMax);
+	Clamp<T>(result.z, aMin, aMax);
+	Clamp<T>(result.w, aMin, aMax);
+	return result;
+}
 
 template<typename T>
 Vec4<T>& Vec4<T>::operator=(const Vec4<T>& rhs)
@@ -621,6 +631,7 @@ Vec4<T>& Vec4<T>::operator=(const Vec4<T>& rhs)
     this->x = rhs.x;
     this->y = rhs.y;
     this->z = rhs.z;
+    this->w = rhs.w;
     return (*this);
 }
 
@@ -631,6 +642,7 @@ Vec4<T> Vec4<T>::operator*(T s) const
     result.x = x * s;
     result.y = y * s;
     result.z = z * s;
+    result.w = w * s;
     return result;
 }
 
@@ -641,6 +653,7 @@ Vec4<T> Vec4<T>::operator+(const Vec4<T>& rhs) const
     result.x = x + rhs.x;
     result.y = y + rhs.y;
     result.z = z + rhs.z;
+    result.w = w + rhs.w;
     return result;
 }
 
@@ -651,6 +664,7 @@ Vec4<T> Vec4<T>::operator-(const Vec4<T>& rhs) const
     result.x = x - rhs.x;
     result.y = y - rhs.y;
     result.z = z - rhs.z;
+    result.w = w - rhs.w;
     return result;
 }
 

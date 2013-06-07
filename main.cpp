@@ -73,12 +73,19 @@ void NormalKey(unsigned char key, int x, int y) {
 	case('c'): {
 		glutLeaveMainLoop();
 		break;
+	}
 	case('r'): {
 		g_lpRayTracer->run();
 		glutPostRedisplay();
 		break;
 	}
+	case('s'): {
+		printf("Storing current frame.\n");
+		g_lpRayTracer->saveFrame();
+		glutPostRedisplay();
+		break;
 	}
+
 	}
 }
 

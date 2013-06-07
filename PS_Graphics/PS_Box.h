@@ -55,8 +55,8 @@ public:
     void tranform(const mat44f& mtx){
     	vec4f lo(m_lower, 1.0);
     	vec4f hi(m_upper, 1.0);
-    	m_lower = mtx.map(lo).getVec3();
-    	m_upper = mtx.map(hi).getVec3();
+    	m_lower = mtx.map(lo).xyz();
+    	m_upper = mtx.map(hi).xyz();
     }
 
     //dimensions

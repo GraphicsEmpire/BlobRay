@@ -49,14 +49,14 @@ void AbstractWidget::drawCubePolygon(int a, int b, int c, int d) {
 }
 
 vec4f AbstractWidget::maskColor(UITRANSFORMAXIS axis) {
-	static const GLfloat red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	static const GLfloat green[] = { 0.0f, 1.0f, 0.0f, 1.0f };
-	static const GLfloat blue[] = { 0.0f, 0.0f, 1.0f, 1.0f };
-	static const GLfloat black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	static const float red[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	static const float green[] = { 0.0f, 1.0f, 0.0f, 1.0f };
+	static const float blue[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	static const float black[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 	vec4f result;
 
 	if (TheUITransform::Instance().axis == axis)
-		result = vec4f(black);
+		result = vec4f(reinterpret_cast<const float*>(black));
 	else {
 		if (axis == uiaX)
 			result = vec4f(red);

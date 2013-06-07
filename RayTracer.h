@@ -77,10 +77,12 @@ public:
 	U32 texture() const {return m_uTexture;}
 
 	void draw();
+	void saveFrame();
 protected:
 	void init();
 	void cleanup();
 	void grabFrame();
+
 
 	int intersect(const Ray& ray, const Interval& interval, IntersectRecord& output);
 	vec4f computePhong(int idxPrim, const vec3f& eye, const vec3f& p, const vec3f& n);
@@ -93,10 +95,15 @@ private:
 
 private:
 	//Input
-	int m_width;
-	int m_height;
+	int m_nx;
+	int m_ny;
 	float m_near;
 	float m_far;
+	float m_left;
+	float m_right;
+	float m_bottom;
+	float m_top;
+
 	vec3f m_eye;
 	rgba8 m_bgColor;
 
@@ -108,6 +115,9 @@ private:
 	//Output
 	Pixmap* m_lpPixmap;
 	U32 m_uTexture;
+
+	//FrameStorage
+	U32 m_iFrameSeq;
 };
 
 
