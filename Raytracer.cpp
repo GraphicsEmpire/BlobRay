@@ -55,9 +55,9 @@ void RayTracer::init() {
 	m_bgColor = rgba8(128, 128, 128, 255);
 
 	//Read Model
-	m_prims.count = 1;
+	m_prims.count = 3;
 	m_prims.prims[0].type = primExplicitSphere;
-	m_prims.prims[0].pos = vec4f(0, 0, 5, 1);
+	m_prims.prims[0].pos = vec4f(1, 0, 3, 1);
 	m_prims.prims[0].dir = vec4f(0, 0, 0, 1);
 	m_prims.prims[0].res = vec4f(1, 0, 0, 0);
 	m_prims.prims[0].ambient = vec4f(0.2, 0, 0, 1);
@@ -65,14 +65,36 @@ void RayTracer::init() {
 	m_prims.prims[0].specular = vec4f(1, 1, 1, 1);
 	m_prims.prims[0].shininess = 16.0f;
 
+	m_prims.prims[1].type = primExplicitSphere;
+	m_prims.prims[1].pos = vec4f(-1, 0, 3, 1);
+	m_prims.prims[1].dir = vec4f(0, 0, 0, 1);
+	m_prims.prims[1].res = vec4f(1, 0, 0, 0);
+	m_prims.prims[1].ambient = vec4f(0, 0.2, 0, 1);
+	m_prims.prims[1].diffused = vec4f(0, 0.8, 0, 1);
+	m_prims.prims[1].specular = vec4f(1, 1, 1, 1);
+	m_prims.prims[1].shininess = 8.0f;
+
+	m_prims.prims[2].type = primExplicitSphere;
+	m_prims.prims[2].pos = vec4f(0, -0.5, 3, 1);
+	m_prims.prims[2].dir = vec4f(0, 0, 0, 1);
+	m_prims.prims[2].res = vec4f(0.5, 0, 0, 0);
+	m_prims.prims[2].ambient = vec4f(0, 0, 0.2, 1);
+	m_prims.prims[2].diffused = vec4f(0, 0, 0.8, 1);
+	m_prims.prims[2].specular = vec4f(1, 1, 1, 1);
+	m_prims.prims[2].shininess = 8.0f;
+
 	//Lights
 	m_lights.count = 1;
-	m_lights.pos[0] = vec4f(0, 2, 2, 1);
+	m_lights.pos[0] = vec4f(0, 8, 0, 1);
 	m_lights.color[0] = vec4f(1,1,1,1);
 }
 
 void RayTracer::grabFrame() {
 	glBindTexture(GL_TEXTURE_2D, m_uTexture);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_nx, m_ny, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_lpPixmap->const_data());
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
@@ -96,6 +118,7 @@ void RayTracer::run() {
 	Ray ray;
 	Interval interval;
 	IntersectRecord record;
+	//i over with and j over height
 	for(int i=0; i < m_nx; i++) {
 		for(int j=0; j < m_ny; j++) {
 
@@ -107,10 +130,12 @@ void RayTracer::run() {
 			ray.set(m_eye, dir);
 			interval.set(vec3f::distance(px, m_eye), FLT_MAX);
 
+			//m_lpPixmap->putPixel(i, j, rgba8(0, 0, 255, 10));
 			//Primary Intersection
 			int ctIntersected = intersect(ray, interval, record);
 			if(ctIntersected > 0) {
-				m_lpPixmap->putPixel(i, j, convertToRGBA8(record.color));
+				record.color.w = 1.0f;
+				m_lpPixmap->putPixel(i, m_ny - j, convertToRGBA8(record.color));
 			}
 		}
 		//grabFrame();
@@ -192,6 +217,7 @@ vec4f RayTracer::computePhong(int idxPrim, const vec3f& eye, const vec3f& p, con
 	vec4f diffused = m_prims.prims[idxPrim].diffused * maxf(0.0f, vec3f::dot(n, l));
 	vec4f specular = m_prims.prims[idxPrim].specular * powf(maxf(vec3f::dot(n, h), 0.0), m_prims.prims[idxPrim].shininess);
 	vec4f output = diffused + specular;
+	//vec4f output = diffused;
 	return vec4f::clamped(output, 0.0f, 1.0f);
 }
 
@@ -209,16 +235,16 @@ void RayTracer::draw() {
 	glBindTexture(GL_TEXTURE_2D, m_uTexture);
 	glBegin(GL_QUADS);
 		glVertex2f(0.0f, 0.0f);
-		glTexCoord2f(0.0f, 1.0f);
-
-		glVertex2f(1.0f, 0.0f);
 		glTexCoord2f(1.0f, 1.0f);
 
-		glVertex2f(1.0f, 1.0f);
+		glVertex2f(1.0f, 0.0f);
 		glTexCoord2f(1.0f, 0.0f);
 
-		glVertex2f(0.0f, 1.0f);
+		glVertex2f(1.0f, 1.0f);
 		glTexCoord2f(0.0f, 0.0f);
+
+		glVertex2f(0.0f, 1.0f);
+		glTexCoord2f(0.0f, 1.0f);
 
 	glEnd();
 }
